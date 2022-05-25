@@ -1,0 +1,26 @@
+{
+	"name": "relationship-dlldttqcle",
+	"properties": {
+		"Name": "relationship-dlldttqcle",
+		"EntityType": "RELATIONSHIP",
+		"Namespace": {
+			"DatabaseName": "Automotive_Template"
+		},
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"FromTableName": "Item",
+		"ToTableName": "AutomotiveProduct",
+		"ColumnRelationshipInformations": [
+			{
+				"FromColumnName": "ItemSku",
+				"ToColumnName": "ItemSku"
+			}
+		],
+		"RelationshipType": 0,
+		"Properties": {
+			"DerivedModelRelationshipInfo": "{\"baseRelationship\":{\"fromEntity\":\"Item.cdm.json/Item\",\"toEntity\":\"AutomotiveProduct.cdm.json/AutomotiveProduct\",\"joinPairs\":[{\"fromAttribute\":\"ItemSku\",\"toAttribute\":\"ItemSku\"}]}}"
+		}
+	},
+	"type": "RELATIONSHIP"
+}

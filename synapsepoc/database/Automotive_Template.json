@@ -1,0 +1,24 @@
+{
+	"name": "Automotive_Template",
+	"properties": {
+		"Name": "Automotive_Template",
+		"EntityType": "DATABASE",
+		"Description": "",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"DerivedModelDBInfo": "{\"ModelDirectives\":{\"BaseModel\":{\"Name\":\"Automotive\",\"Version\":\"0.1.0\"}}}",
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://dlsilspocfs1@ilspjhadyzvpbvvmpoc.dfs.core.windows.net/Automotive_Template",
+			"Properties": {
+				"FormatType": "csv",
+				"LinkedServiceName": "ilspjhadyzvpbvvmpocws1-WorkspaceDefaultStorage"
+			}
+		}
+	},
+	"type": "DATABASE"
+}

@@ -1,0 +1,26 @@
+{
+	"name": "relationship-twelnpkjio",
+	"properties": {
+		"Name": "relationship-twelnpkjio",
+		"EntityType": "RELATIONSHIP",
+		"Namespace": {
+			"DatabaseName": "Automotive_Template"
+		},
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"FromTableName": "AutomotiveProduct",
+		"ToTableName": "Item",
+		"ColumnRelationshipInformations": [
+			{
+				"FromColumnName": "ProductId",
+				"ToColumnName": "ProductId"
+			}
+		],
+		"RelationshipType": 0,
+		"Properties": {
+			"DerivedModelRelationshipInfo": "{\"baseRelationship\":{\"fromEntity\":\"AutomotiveProduct.cdm.json/AutomotiveProduct\",\"toEntity\":\"Item.cdm.json/Item\",\"joinPairs\":[{\"fromAttribute\":\"ProductId\",\"toAttribute\":\"ProductId\"}]}}"
+		}
+	},
+	"type": "RELATIONSHIP"
+}

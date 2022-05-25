@@ -19,6 +19,9 @@
 		},
 		"keyVaultLinkedservice_properties_typeProperties_baseUrl": {
 			"value": "@{concat('https://',linkedService().keyVaultName,'.vault.azure.net/')}"
+		},
+		"covid-tracking_sasUri": {
+			"value": ""
 		}
 	}
 }

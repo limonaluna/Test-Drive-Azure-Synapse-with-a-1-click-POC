@@ -217,7 +217,7 @@
 					}
 				},
 				"folder": {
-					"name": "TripFaresDataPipeline"
+					"name": "NYTaxiDemo"
 				},
 				"annotations": []
 			},
@@ -1091,12 +1091,13 @@
 					}
 				},
 				"folder": {
-					"name": "TripFaresDataPipeline"
+					"name": "NYTaxiDemo"
 				},
 				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/dataflows/tripFaresDataTransformations')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('workspaceId'), '/datasets/azureSynapseAnalyticsSchema')]",
 				"[concat(variables('workspaceId'), '/datasets/tripsDataSource')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsTripsData')]",
@@ -1940,7 +1941,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "ecc07054-e072-46f6-85d7-8126969356e4"
+						"spark.autotune.trackingId": "8a1e1e18-224b-4ea1-8957-f3b665d28a2e"
 					}
 				},
 				"metadata": {
@@ -2296,7 +2297,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "d2c2cbae-66bb-4f07-aa02-887e99fd11b2"
+						"spark.autotune.trackingId": "918a9405-233a-4b16-9078-9694cbca4978"
 					}
 				},
 				"metadata": {

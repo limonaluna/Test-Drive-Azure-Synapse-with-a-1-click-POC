@@ -1920,6 +1920,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/DemoDatabaseDeveloper')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT * FROM tripfares.AggregateTaxiData\n\nSELECT TOP(10) * FROM dbo.FaresData\nSELECT TOP(10) * FROM dbo.TripsData\n\n\n\nSELECT COUNT(*) FROM dbo.FaresData\nSELECT COUNT(*) FROM dbo.TripsData\n\n\nSELECT DISTINCT COUNT(*) FROM dbo.FaresData\nSELECT DISTINCT COUNT(*) FROM dbo.TripsData\n\nTRUNCATE TABLE dbo.FaresData\nTRUNCATE TABLE dbo.TripsData\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "ilspjhadyzvpbvvmpocws1p1",
+						"poolName": "ilspjhadyzvpbvvmpocws1p1"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/Data Exploration and ML Modeling - NYC taxi predict using Spark MLlib')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -2276,7 +2296,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "cfcaf456-6fc4-4ab7-81da-f5161c160e12"
+						"spark.autotune.trackingId": "60e7c936-35c5-4225-8932-1cdc547e5cc4"
 					}
 				},
 				"metadata": {
@@ -2301,8 +2321,7 @@
 						"sparkVersion": "2.4",
 						"nodeCount": 5,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -12406,26 +12425,6 @@
 			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/DemoDatabaseDeveloper')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT * FROM tripfares.AggregateTaxiData\n\nSELECT TOP(10) * FROM dbo.FaresData\nSELECT TOP(10) * FROM dbo.TripsData",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "ilspjhadyzvpbvvmpocws1p1",
-						"poolName": "ilspjhadyzvpbvvmpocws1p1"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
 			"dependsOn": []
 		}
 	]

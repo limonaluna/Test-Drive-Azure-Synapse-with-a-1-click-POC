@@ -336,7 +336,7 @@
 			}
 		},
 		"folder": {
-			"name": "TripFaresDataPipeline"
+			"name": "NYTaxiDemo"
 		},
 		"annotations": []
 	}

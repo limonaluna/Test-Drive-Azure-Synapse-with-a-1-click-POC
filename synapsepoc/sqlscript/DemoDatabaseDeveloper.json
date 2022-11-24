@@ -2,7 +2,7 @@
 	"name": "DemoDatabaseDeveloper",
 	"properties": {
 		"content": {
-			"query": "SELECT * FROM tripfares.AggregateTaxiData\n\nSELECT TOP(10) * FROM dbo.FaresData\nSELECT TOP(10) * FROM dbo.TripsData",
+			"query": "SELECT * FROM tripfares.AggregateTaxiData\n\nSELECT TOP(10) * FROM dbo.FaresData\nSELECT TOP(10) * FROM dbo.TripsData\n\n\n\nSELECT COUNT(*) FROM dbo.FaresData\nSELECT COUNT(*) FROM dbo.TripsData\n\n\nSELECT DISTINCT COUNT(*) FROM dbo.FaresData\nSELECT DISTINCT COUNT(*) FROM dbo.TripsData\n\nTRUNCATE TABLE dbo.FaresData\nTRUNCATE TABLE dbo.TripsData\n",
 			"metadata": {
 				"language": "sql"
 			},

@@ -1,0 +1,17 @@
+{
+	"name": "DemoDatabaseDeveloper",
+	"properties": {
+		"content": {
+			"query": "SELECT * FROM tripfares.AggregateTaxiData\n\nSELECT TOP(10) * FROM dbo.FaresData\nSELECT TOP(10) * FROM dbo.TripsData",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "ilspjhadyzvpbvvmpocws1p1",
+				"poolName": "ilspjhadyzvpbvvmpocws1p1"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

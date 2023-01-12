@@ -12,6 +12,10 @@
 			"metadata": "Secure string for 'connectionString' of 'TripFaresSynapseAnalyticsLinkedService'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().SynapseWorkspaceName};Initial Catalog=@{linkedService().SQLDedicatedPoolName};User ID=@{linkedService().SQLLoginUsername}"
 		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
 		"HttpServerTripDataLinkedService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com/Azure/Test-Drive-Azure-Synapse-with-a-1-click-POC/main/tripDataAndFaresCSV/trip-data.csv"
@@ -1465,7 +1469,7 @@
 				"annotations": [],
 				"type": "PowerBIWorkspace",
 				"typeProperties": {
-					"workspaceID": "54a53ca5-feff-427a-b932-d6a84726e07d",
+					"workspaceID": "ad37976a-1ec6-4d44-aa12-9caa17dc65b0",
 					"tenantID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
 				}
 			},
@@ -1718,7 +1722,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://ilspjhadyzvpbvvmpoc.dfs.core.windows.net/public/trip-data.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE\n    ) AS [result]\n\n\n\n-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://ilspjhadyzvpbvvmpoc.dfs.core.windows.net/public/fares-data.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE\n    ) AS [result]\n",
+					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://ilomzmir3kdfqenspocws1.dfs.core.windows.net/public/trip-data.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE\n    ) AS [result]\n\n\n\n-- This is auto-generated code\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://ilomzmir3kdfqenspocws1.dfs.core.windows.net/public/fares-data.csv',\n        FORMAT = 'CSV',\n        PARSER_VERSION = '2.0',\n        HEADER_ROW = TRUE\n    ) AS [result]\n",
 					"metadata": {
 						"language": "sql"
 					},
@@ -1773,7 +1777,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "7b8302e2-5521-4614-b1f5-16db5def6c72"
+						"spark.autotune.trackingId": "776f06b6-97e4-4ee3-90f8-016f3998e8fd"
 					}
 				},
 				"metadata": {
@@ -1787,10 +1791,10 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/46bacf83-380d-43f6-9948-434a2b189f76/resourceGroups/demo-datalakehouse/providers/Microsoft.Synapse/workspaces/ilspjhadyzvpbvvmpocws1/bigDataPools/ws1sparkpool1",
+						"id": "/subscriptions/ff6c78d7-2670-45f6-ae94-5427024490ea/resourceGroups/synapse-demo/providers/Microsoft.Synapse/workspaces/ilomzmir3kdfqenspocws1/bigDataPools/ws1sparkpool1",
 						"name": "ws1sparkpool1",
 						"type": "Spark",
-						"endpoint": "https://ilspjhadyzvpbvvmpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
+						"endpoint": "https://ilomzmir3kdfqenspocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
@@ -1798,13 +1802,15 @@
 						"sparkVersion": "2.4",
 						"nodeCount": 5,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"# Predict NYC Taxi Tips using Spark ML and Azure Open Datasets\n",
 							"\n",
@@ -1817,6 +1823,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"import matplotlib.pyplot as plt\n",
 							"\n",
@@ -1835,10 +1842,11 @@
 							"from pyspark.ml.evaluation import BinaryClassificationEvaluator"
 						],
 						"outputs": [],
-						"execution_count": 1
+						"execution_count": 10
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Ingest Data¶ \n",
 							"\n",
@@ -1847,6 +1855,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"# Import NYC yellow cab data from Azure Open Datasets\n",
 							"from azureml.opendatasets import NycTlcYellow\n",
@@ -1861,19 +1870,21 @@
 							"nyc_tlc_df = nyc_tlc.to_spark_dataframe()"
 						],
 						"outputs": [],
-						"execution_count": 2
+						"execution_count": 11
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"#To make development easier, faster and less expensive downsample for now\n",
 							"sampled_taxi_df = nyc_tlc_df.sample(True, 0.001, seed=1234)"
 						],
 						"outputs": [],
-						"execution_count": 3
+						"execution_count": 12
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Exploratory Data Analysis\n",
 							"\n",
@@ -1882,6 +1893,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"#The charting package needs a Pandas dataframe or numpy array do the conversion\n",
 							"sampled_taxi_pd_df = sampled_taxi_df.toPandas()\n",
@@ -1912,10 +1924,11 @@
 							"plt.show()"
 						],
 						"outputs": [],
-						"execution_count": 4
+						"execution_count": 13
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Data Prep and Featurization\n",
 							"\n",
@@ -1927,6 +1940,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"taxi_df = sampled_taxi_df.select('totalAmount', 'fareAmount', 'tipAmount', 'paymentType', 'rateCodeId', 'passengerCount'\\\n",
 							"                                , 'tripDistance', 'tpepPickupDateTime', 'tpepDropoffDateTime'\\\n",
@@ -1945,10 +1959,11 @@
 							"                                )"
 						],
 						"outputs": [],
-						"execution_count": 5
+						"execution_count": 14
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Data Prep and Featurization Part 2\n",
 							"\n",
@@ -1960,6 +1975,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"taxi_featurised_df = taxi_df.select('totalAmount', 'fareAmount', 'tipAmount', 'paymentType', 'passengerCount'\\\n",
 							"                                                , 'tripDistance', 'weekdayString', 'pickupHour','tripTimeSecs','tipped'\\\n",
@@ -1972,10 +1988,11 @@
 							"                                       .filter((taxi_df.tripTimeSecs >= 30) & (taxi_df.tripTimeSecs <= 7200))"
 						],
 						"outputs": [],
-						"execution_count": 6
+						"execution_count": 15
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Encoding\n",
 							"\n",
@@ -1989,6 +2006,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"# The sample uses an algorithm that only works with numeric features convert them so they can be consumed\n",
 							"sI1 = StringIndexer(inputCol=\"trafficTimeBins\", outputCol=\"trafficTimeBinsIndex\"); \n",
@@ -2000,10 +2018,11 @@
 							"encoded_final_df = Pipeline(stages=[sI1, en1, sI2, en2]).fit(taxi_featurised_df).transform(taxi_featurised_df)"
 						],
 						"outputs": [],
-						"execution_count": 7
+						"execution_count": 16
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Generation of Testing and Training Data Sets\n",
 							"Simple split, 70% for training and 30% for testing the model. Playing with this ratio may result in different models.\n",
@@ -2012,6 +2031,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"# Decide on the split between training and testing data from the dataframe \n",
 							"trainingFraction = 0.7\n",
@@ -2022,10 +2042,11 @@
 							"train_data_df, test_data_df = encoded_final_df.randomSplit([trainingFraction, testingFraction], seed=seed)"
 						],
 						"outputs": [],
-						"execution_count": 8
+						"execution_count": 17
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Train the Model\n",
 							"\n",
@@ -2034,6 +2055,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"## Create a new LR object for the model\n",
 							"logReg = LogisticRegression(maxIter=10, regParam=0.3, labelCol = 'tipped')\n",
@@ -2048,7 +2070,7 @@
 							"datestamp = datetime.now().strftime('%m-%d-%Y-%s');\n",
 							"fileName = \"lrModel_\" + datestamp;\n",
 							"logRegDirfilename = fileName;\n",
-							"lrModel.save(logRegDirfilename)\n",
+							"##lrModel.save(logRegDirfilename)\n",
 							"\n",
 							"## Predict tip 1/0 (yes/no) on the test dataset, evaluation using AUROC\n",
 							"predictions = lrModel.transform(test_data_df)\n",
@@ -2057,10 +2079,11 @@
 							"print(\"Area under ROC = %s\" % metrics.areaUnderROC)"
 						],
 						"outputs": [],
-						"execution_count": 10
+						"execution_count": 19
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Evaluate and Visualize\n",
 							"\n",
@@ -2070,6 +2093,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"## Plot the ROC curve, no need for pandas as this uses the modelSummary object\n",
 							"modelSummary = lrModel.stages[-1].summary\n",
@@ -2080,6 +2104,25 @@
 							"plt.xlabel('False Positive Rate')\n",
 							"plt.ylabel('True Positive Rate')\n",
 							"plt.show()"
+						],
+						"outputs": [],
+						"execution_count": 20
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							""
 						],
 						"outputs": [],
 						"execution_count": null
@@ -2109,7 +2152,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "60e7c936-35c5-4225-8932-1cdc547e5cc4"
+						"spark.autotune.trackingId": "21f17232-8029-4eeb-abda-dfcb319e66d6"
 					}
 				},
 				"metadata": {
@@ -2123,10 +2166,10 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/46bacf83-380d-43f6-9948-434a2b189f76/resourceGroups/demo-datalakehouse/providers/Microsoft.Synapse/workspaces/ilspjhadyzvpbvvmpocws1/bigDataPools/ws1sparkpool1",
+						"id": "/subscriptions/ff6c78d7-2670-45f6-ae94-5427024490ea/resourceGroups/synapse-demo/providers/Microsoft.Synapse/workspaces/ilomzmir3kdfqenspocws1/bigDataPools/ws1sparkpool1",
 						"name": "ws1sparkpool1",
 						"type": "Spark",
-						"endpoint": "https://ilspjhadyzvpbvvmpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
+						"endpoint": "https://ilomzmir3kdfqenspocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
@@ -2134,7 +2177,8 @@
 						"sparkVersion": "2.4",
 						"nodeCount": 5,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -2171,7 +2215,7 @@
 						},
 						"source": [
 							"%%pyspark\r\n",
-							"df = spark.read.load('abfss://public@ilspjhadyzvpbvvmpoc.dfs.core.windows.net/fares-data.csv', format='csv', header=True\r\n",
+							"df = spark.read.load('abfss://public@ilomzmir3kdfqenspocws1.dfs.core.windows.net/fares-data.csv', format='csv', header=True\r\n",
 							")\r\n",
 							"display(df.limit(10))"
 						],
@@ -2210,7 +2254,7 @@
 						},
 						"source": [
 							"%%pyspark\r\n",
-							"df = spark.read.load('abfss://public@ilspjhadyzvpbvvmpoc.dfs.core.windows.net/trip-data.csv', format='csv', header=True\r\n",
+							"df = spark.read.load('abfss://public@ilomzmir3kdfqenspocws1.dfs.core.windows.net/trip-data.csv', format='csv', header=True\r\n",
 							")\r\n",
 							"display(df.limit(10))"
 						],
@@ -2257,7 +2301,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "a97b88bc-6dfb-4ace-a1a9-02c6e93f9374"
+						"spark.autotune.trackingId": "a0242da4-917f-4733-8e4b-5e494bcaa970"
 					}
 				},
 				"metadata": {
@@ -2275,6 +2319,7 @@
 				"cells": [
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"# Access data on Azure Data Lake Storage Gen2 (ADLS Gen2) with Synapse Spark\n",
 							"\n",
@@ -2292,6 +2337,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Load a sample data\n",
 							"\n",
@@ -2300,6 +2346,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"from azureml.opendatasets import PublicHolidays\n",
 							"\n",
@@ -2318,6 +2365,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"# Display 5 rows\n",
 							"hol_df.show(5, truncate = False)"
@@ -2327,6 +2375,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"## Write data to the default ADLS Gen2 storage\n",
 							"\n",
@@ -2336,6 +2385,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"from pyspark.sql import SparkSession\n",
 							"from pyspark.sql.types import *\n",
@@ -2353,6 +2403,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"### Save a dataframe as Parquet, JSON or CSV\n",
 							"If you have a dataframe, you can save it to Parquet or JSON with the .write.parquet(), .write.json() and .write.csv() methods respectively.\n",
@@ -2363,6 +2414,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"parquet_path = adls_path + 'holiday.parquet'\n",
 							"json_path = adls_path + 'holiday.json'\n",
@@ -2376,6 +2428,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"hol_df.write.parquet(parquet_path, mode = 'overwrite')\n",
 							"hol_df.write.json(json_path, mode = 'overwrite')\n",
@@ -2386,6 +2439,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"### Save a dataframe as text files\n",
 							"If you have a dataframe that you want ot save as text file, you must first covert it to an RDD and then save that RDD as a text file.\n",
@@ -2394,6 +2448,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"# Define the text file path\n",
 							"text_path = adls_path + 'holiday.txt'\n",
@@ -2404,6 +2459,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"# Covert spark dataframe into RDD \n",
 							"hol_RDD = hol_df.rdd\n",
@@ -2414,6 +2470,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"If you have an RDD, you can convert it to a text file like the following:\n",
 							""
@@ -2421,6 +2478,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							" # Save RDD as text file\n",
 							"hol_RDD.saveAsTextFile(text_path)"
@@ -2430,6 +2488,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"# Read data from the default ADLS Gen2 storage\n",
 							""
@@ -2437,6 +2496,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"### Create a dataframe from parquet files\n",
 							""
@@ -2444,6 +2504,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"df_parquet = spark.read.parquet(parquet_path)"
 						],
@@ -2452,6 +2513,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"### Create a dataframe from JSON files\n",
 							""
@@ -2459,6 +2521,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"df_json = spark.read.json(json_path)"
 						],
@@ -2467,6 +2530,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"### Create a dataframe from CSV files\n",
 							""
@@ -2474,6 +2538,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"df_csv = spark.read.csv(csv_path, header = 'true')"
 						],
@@ -2482,6 +2547,7 @@
 					},
 					{
 						"cell_type": "markdown",
+						"metadata": {},
 						"source": [
 							"### Create an RDD from text file\n",
 							""
@@ -2489,6 +2555,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"text = sc.textFile(text_path)"
 						],
@@ -12239,6 +12306,99 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/BasicDatabricksETL')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "smallradio-etl-storage-to-dedicated",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Shared/elt-blob-storage-sqldw-python"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks1",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ETL-demos"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDatabricks1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/IntegrationRuntime1')]",
+			"type": "Microsoft.Synapse/workspaces/integrationRuntimes",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureDatabricks1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7826541520060008.8.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
+					"existingClusterId": "0112-173436-d4g0v8lf"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
 		}
 	]
 }

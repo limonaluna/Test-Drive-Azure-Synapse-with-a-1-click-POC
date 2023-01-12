@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "60e7c936-35c5-4225-8932-1cdc547e5cc4"
+				"spark.autotune.trackingId": "4d9e2f9c-e285-4451-9f2b-c6026ae9520c"
 			}
 		},
 		"metadata": {
@@ -31,10 +31,10 @@
 				"name": "python"
 			},
 			"a365ComputeOptions": {
-				"id": "/subscriptions/46bacf83-380d-43f6-9948-434a2b189f76/resourceGroups/demo-datalakehouse/providers/Microsoft.Synapse/workspaces/ilspjhadyzvpbvvmpocws1/bigDataPools/ws1sparkpool1",
+				"id": "/subscriptions/ff6c78d7-2670-45f6-ae94-5427024490ea/resourceGroups/synapse-demo/providers/Microsoft.Synapse/workspaces/ilomzmir3kdfqenspocws1/bigDataPools/ws1sparkpool1",
 				"name": "ws1sparkpool1",
 				"type": "Spark",
-				"endpoint": "https://ilspjhadyzvpbvvmpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
+				"endpoint": "https://ilomzmir3kdfqenspocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
 				"auth": {
 					"type": "AAD",
 					"authResource": "https://dev.azuresynapse.net"
@@ -80,7 +80,7 @@
 				},
 				"source": [
 					"%%pyspark\r\n",
-					"df = spark.read.load('abfss://public@ilspjhadyzvpbvvmpoc.dfs.core.windows.net/fares-data.csv', format='csv', header=True\r\n",
+					"df = spark.read.load('abfss://public@ilomzmir3kdfqenspocws1.dfs.core.windows.net/fares-data.csv', format='csv', header=True\r\n",
 					")\r\n",
 					"display(df.limit(10))"
 				],
@@ -118,7 +118,7 @@
 				},
 				"source": [
 					"%%pyspark\r\n",
-					"df = spark.read.load('abfss://public@ilspjhadyzvpbvvmpoc.dfs.core.windows.net/trip-data.csv', format='csv', header=True\r\n",
+					"df = spark.read.load('abfss://public@ilomzmir3kdfqenspocws1.dfs.core.windows.net/trip-data.csv', format='csv', header=True\r\n",
 					")\r\n",
 					"display(df.limit(10))"
 				],

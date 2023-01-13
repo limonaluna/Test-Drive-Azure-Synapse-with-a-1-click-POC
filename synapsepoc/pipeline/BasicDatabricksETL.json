@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "smallradio-etl-storage-to-dedicated",
+				"name": "smallradio-etl-bronze-to-gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -21,8 +21,77 @@
 					"referenceName": "AzureDatabricks1",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "smallradio-etl-gold-to-dedicated",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Create Schema If Does Not Exists",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Shared/elt-blob-storage-gold-dedicatedsql-python"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Create Schema If Does Not Exists",
+				"description": "Creates the schema inside the SQL dedicated pool. Shema name comes from the pipeline parameter 'SchemaName'.",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "smallradio-etl-bronze-to-gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.00:05:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"dataset": {
+						"referenceName": "smallradio_parquet",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
 			}
 		],
+		"parameters": {
+			"SchemaName": {
+				"type": "string",
+				"defaultValue": "smallradio"
+			}
+		},
 		"folder": {
 			"name": "ETL-demos"
 		},

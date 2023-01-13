@@ -1,0 +1,25 @@
+{
+	"name": "smallradio_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TripFaresDataLakeStorageLinkedService",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"keyVaultName": "kvilomzmir3kdfqenspoc",
+				"datalakeAccountName": "ilomzmir3kdfqenspoc"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "small_radio_subscriptions",
+				"folderPath": "gold",
+				"fileSystem": "databricksdemo"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

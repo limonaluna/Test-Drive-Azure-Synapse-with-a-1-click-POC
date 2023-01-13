@@ -80,7 +80,11 @@
 					},
 					"dataset": {
 						"referenceName": "smallradio_parquet",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"keyVaultName": "@pipeline().parameters.KeyVaultName",
+							"datalakeAccountName": "@pipeline().parameters.datalakeAccountName"
+						}
 					},
 					"firstRowOnly": false
 				}

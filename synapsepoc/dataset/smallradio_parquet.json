@@ -5,8 +5,16 @@
 			"referenceName": "TripFaresDataLakeStorageLinkedService",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"keyVaultName": "kvilomzmir3kdfqenspoc",
-				"datalakeAccountName": "ilomzmir3kdfqenspoc"
+				"keyVaultName": "@dataset().keyVaultName",
+				"datalakeAccountName": "@dataset().datalakeAccountName"
+			}
+		},
+		"parameters": {
+			"keyVaultName": {
+				"type": "string"
+			},
+			"datalakeAccountName": {
+				"type": "string"
 			}
 		},
 		"annotations": [],

@@ -27,7 +27,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Create Schema If Does Not Exists",
+						"activity": "Check Small Radio Parquet File",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -50,8 +50,8 @@
 				}
 			},
 			{
-				"name": "Create Schema If Does Not Exists",
-				"description": "Creates the schema inside the SQL dedicated pool. Shema name comes from the pipeline parameter 'SchemaName'.",
+				"name": "Check Small Radio Parquet File",
+				"description": "Checks whether small radio data is stored as a Parquet File",
 				"type": "Lookup",
 				"dependsOn": [
 					{

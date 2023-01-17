@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Shared/elt-blob-storage-sqldw-python"
+					"notebookPath": "/Shared/elt-blob-storage-bronze-gold-python"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks1",

@@ -64,7 +64,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Shared/elt-blob-storage-sqldw-python"
+							"notebookPath": "/Shared/elt-blob-storage-bronze-gold-python"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks1",
@@ -76,7 +76,7 @@
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "Create Schema If Does Not Exists",
+								"activity": "Check Small Radio Parquet File",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -99,8 +99,8 @@
 						}
 					},
 					{
-						"name": "Create Schema If Does Not Exists",
-						"description": "Creates the schema inside the SQL dedicated pool. Shema name comes from the pipeline parameter 'SchemaName'.",
+						"name": "Check Small Radio Parquet File",
+						"description": "Checks whether small radio data is stored as a Parquet File",
 						"type": "Lookup",
 						"dependsOn": [
 							{
@@ -1416,6 +1416,44 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/linkedServices/HttpServerTripFareDataLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/smallradio_parquet')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TripFaresDataLakeStorageLinkedService",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"keyVaultName": "@dataset().keyVaultName",
+						"datalakeAccountName": "@dataset().datalakeAccountName"
+					}
+				},
+				"parameters": {
+					"keyVaultName": {
+						"type": "string"
+					},
+					"datalakeAccountName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "small_radio_subscriptions",
+						"folderPath": "gold",
+						"fileSystem": "databricksdemo"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/TripFaresDataLakeStorageLinkedService')]"
 			]
 		},
 		{
@@ -12449,44 +12487,6 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/smallradio_parquet')]",
-			"type": "Microsoft.Synapse/workspaces/datasets",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "TripFaresDataLakeStorageLinkedService",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"keyVaultName": "@dataset().keyVaultName",
-						"datalakeAccountName": "@dataset().datalakeAccountName"
-					}
-				},
-				"parameters": {
-					"keyVaultName": {
-						"type": "string"
-					},
-					"datalakeAccountName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "small_radio_subscriptions",
-						"folderPath": "gold",
-						"fileSystem": "databricksdemo"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/TripFaresDataLakeStorageLinkedService')]"
-			]
 		}
 	]
 }
